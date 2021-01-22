@@ -32,7 +32,7 @@ var getWeather = function(input){
 var displayWeather = function(data, searchTerm) {
     // check if api returned any repos
     console.log(data);
-    document.getElementById("search-result-container").textContent = searchTerm;
+    document.getElementById("search-result-container").textContent = searchTerm + " : " + data.current.clouds;
 
 };
 
