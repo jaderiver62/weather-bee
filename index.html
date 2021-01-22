@@ -3,8 +3,12 @@
 
 <head>
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
     <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,400i,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
     <link rel="stylesheet" href="assets\css\style.css">
@@ -14,39 +18,24 @@
 <body class="flex-column min-100-vh bg-dark text-light">
     <header class="hero">
         <h1 class="app-title">
-            <i class="fab fa-forumbee"></i>Weather Bee</h1>
-        <p>Search for a city to find the weather forecasts!
-        </p>
+            <i class="fab fa-forumbee"></i> Weather Bee Dashboard </h1>
+        <p></p>
     </header>
 
 
-    <main class="flex-row justify-space-between">
+    <main class="flex-row justify-space-between text-dark">
         <div class="col-12 col-md-4">
             <div class="card">
-                <h3 class="card-header text-uppercase">Search By City</h3>
+                <h3 class="card-header">Search for a City</h3>
                 <form id="user-for " class="card-body">
-                    <label class="form-label" for="City">City</label>
+                    <label class="form-label" for="City"><h3>City</h3></label>
                     <input name="City" id="myCity" type="text" autofocus="true" class="form-input" />
-                    <button type="submit" class="btn">Get Weather!</button>
+                    <button type="submit" class="btn"><i class="fas fa-search"></i></button>
                 </form>
-            </div>
-
-            <div class="card">
-                <h3 class="card-header text-uppercase">Search History</h3>
-                <div id="language-buttons" class="card-body">
-
-                </div>
-            </div>
-        </div>
-
-        <div class="col-12 col-md-8 ">
-            <h2 class="heading-text">Showing weather for: <span id="city-search-term"></span></h2>
-            <div id="weather-report-container " class="list-group">
-
             </div>
         </div>
     </main>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js "></script>
     <script src="assets\js\script.js "></script>
 </body>
 
