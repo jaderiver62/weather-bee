@@ -23,22 +23,25 @@
     </header>
 
 
-    <main class="flex-row justify-space-between">
-        <div class="container-fluid col-12">
-            <div class="card col-12 col-sm-12 col-md-3 col-lg-4 col-xl-4 text-dark">
-                <div class="search-prompt">
+    <main class="d-flex justify-content-center bg-light text-dark">
+        <div class="container-fluid">
+            <div class="time-block m-2 row col-12 col-sm-12 no-gutters">
+
+                <div id="time-column" class="time-event-header d-block d-sm-block d-md-block d-lg-block col-4 col-xs-4 col-sm-5 col-lg-3 col-xl-3 px-0">
                     <h3 class="card-header">Search for a City</h3>
                     <form id="user-form" class="card-body">
                         <label class="form-label" for="City"><h3>City</h3></label>
                         <input name="City" id="myCity" type="text" autofocus="true" class="form-input" />
                         <button type="submit" class="btn"><i class="fas fa-search"></i></button>
                     </form>
-                    <span class="search-history" id="search-history"><h4>Blah</h4></span>
                 </div>
+                <div id="event-column" class="event-column d-block d-sm-block d-md-block d-lg-block col-6 col-xs-6 col-sm-6 col-lg-8 col-xl-8 px-0">
+                </div>
+                <div id="save-column" class="save-column d-block d-sm-block d-md-block d-lg-block col-2 col-xs-2 col-sm-1 col-lg-1 col-xl-1 px-0">
+                </div>
+
             </div>
-
         </div>
-
     </main>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js "></script>
     <script src="assets\js\script.js "></script>
