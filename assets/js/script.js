@@ -51,11 +51,27 @@ var getWeather = function(data, searchTerm) {
 };
 var displayWeather = function(data, searchTerm) {
     searchTerm = searchTerm.charAt(0).toUpperCase() + searchTerm.slice(1);
+    var capitalizeTerms = searchTerm.split(" ");
+
+    for (let i = 0; i < capitalizeTerms.length; i++) {
+        capitalizeTerms[i] = capitalizeTerms[i][0].toUpperCase() + capitalizeTerms[i].substr(1);
+    }
+    searchTerm = capitalizeTerms.join(" ");
+
     var resultMainEl = document.getElementById("search-result-container");
-    resultMainEl.setAttribute("style", "boder: 1px solid black; padding: 10px 10px");
+    resultMainEl.setAttribute("style", "border: 1px solid black; padding: 10px 10px; display: inline-block;");
     var resultTopDivEl = document.createElement("div");
-    resultTopDivEl.className = "top-result d-block d-sm-block d-md-block d-lg-block col-6 col-xs-6 col-sm-6 col-lg-8 col-xl-8 px-0";
-    resultTopDivEl.innerHTML = "<h3>" + searchTerm + "  (" + moment().format('L') + ")</h3> ";
+    var myIconEl = document.createElement('img');
+    myIconEl.src = "http://openweathermap.org/img/wn/01d@2x.png";
+    resultTopDivEl.className = "top-result";
+    resultTopDivEl.innerHTML = "<h3>" + searchTerm + "  (" + moment().format('L') + ") ";
+    resultTopDivEl.appendChild(myIconEl);
     resultMainEl.appendChild(resultTopDivEl);
+
     console.log(data);
+    /* 10d */
+};
+var getIcon = function(iconNumber) {
+    /*    if (iconNumber === )*/
+
 };
