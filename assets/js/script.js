@@ -59,10 +59,11 @@ var displayWeather = function(data, searchTerm) {
     searchTerm = capitalizeTerms.join(" ");
 
     var resultMainEl = document.getElementById("search-result-container");
-    resultMainEl.setAttribute("style", "border: 1px solid black; padding: 10px 10px; display: inline-block;");
+    resultMainEl.setAttribute("style", "border: 1px solid black; padding: 10px 10px; display: inline-grid;");
     var resultTopDivEl = document.createElement("div");
     var myIconEl = document.createElement('img');
-    myIconEl.src = "http://openweathermap.org/img/wn/01d@2x.png";
+    var weatherIconCode = data.current.weather[0].icon;
+    myIconEl.src = "http://openweathermap.org/img/wn/" + weatherIconCode + "@2x.png";
     resultTopDivEl.className = "top-result";
     resultTopDivEl.innerHTML = "<h3>" + searchTerm + "  (" + moment().format('L') + ") ";
     resultTopDivEl.appendChild(myIconEl);
