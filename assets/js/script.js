@@ -1,76 +1,55 @@
-var userFormEl = document.querySelector("#user-form");
-var cityInputEl = document.querySelector("#form-input");
-var resultContainerEl = document.querySelector("#search-result-container");
-var citySearchTerm = document.querySelector("#history-section");
+var searchBtn = document.getElementById("btn");
 
-var formSubmitHandler = function(event) {
-
+var searchHandler = function(event) {
     event.preventDefault();
+    var resultEl = document.getElementById("search-result-container");
+    var inputContent = document.getElementById("citySelection").value;
+    if (inputContent) {
+        getCoordinates(inputContent);
 
 
-    var city = cityInputEl.value.trim();
-
-    if (city) {
-        getCityResult(city);
-
-
-        resultContainerEl.textContent = "";
-        cityInputEl.value = "";
-    } else {
-        alert("Please enter a City");
-    }
+    };
 };
+searchBtn.addEventListener("click", searchHandler);
 
+var getCoordinates = function(input) {
+    console.log(input);
+    var apiUrl = "https://api.opencagedata.com/geocode/v1/json?q=" + input + "&key=974cf3d56a9f45d58e79a7ec8b1f7842";
 
-var getCityResult = function(cityEntry) {
-
-
-    var apiUrl = "api.openweathermap.org/data/2.5/weather?q=" + cityEntry + "&appid=904649fff993603df4dffbb9fbb443f4";
-
-    fetch(apiUrl)
-        .then(function(response) {
-
-            if (response.ok) {
-                console.log(response);
-                response.json().then(function(data) {
-                    console.log(data);
-                    displayResults(data, cityEntry);
-                });
-            } else {
-                alert("Error: " + response.statusText);
-            }
-        })
-        .catch(function(error) {
-            alert("Unable to connect to Open Weather Map");
-        });
-};
-
-
-var displayResults = function(results, searchTerm) {
-    if (results.length === 0) {
-        resultContainerEl.textContent = "No such city found.";
-        return;
-    }
-
-    citySearchTerm.textContent = searchTerm;
-
-    // loop over repos
-    for (var i = 0; i < results.length; i++) {
-
-        var statusEl = document.createElement("span");
-        statusEl.classList = "flex-row align-center";
-
-        if (results[i].open_issues_count > 0) {
-            statusEl.innerHTML =
-                "<i class='fas fa-times status-icon icon-danger'></i>" + results[i].open_issues_count + " issue(s)";
+    // make a get request to url
+    fetch(apiUrl).then(function(response) {
+        // request was successful
+        if (response.ok) {
+            response.json().then(function(data) {
+                getWeather(data, input);
+            });
         } else {
-            statusEl.innerHTML = "<i class='fas fa-check-square status-icon icon-success'></i>";
+            alert("Error: " + response.statusText);
         }
-
-        resultContainerEl.appendChild(statusEl);
-
-    }
+    });
 };
+// 33.441792-94.037689&exclude=hourly,daily&appid=3812ea6836536b0581712ffd66f54fa5    
+var getWeather = function(data, searchTerm) {
+    // check if api returned any repos
+    console.log(data);
+    var latEl = data.results[0].geometry.lat;
+    var lngEl = data.results[0].geometry.lng;
+    var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + latEl + "&lon=" + lngEl + "&appid=3812ea6836536b0581712ffd66f54fa5";
 
-// add event listeners to form and button container
-userFormEl.addEventListener("btn", formSubmitHandler);
+    // make a get request to url
+    fetch(apiUrl).then(function(response) {
+        // request was successful
+        if (response.ok) {
+            response.json().then(function(data) {
+                displayWeather(data, searchTerm);
+            });
+        } else {
+            alert("Error: " + response.statusText);
+        }
+    });
+
+};
+var displayWeather = function(data, searchTerm) {
+    document.getElementById("search-result-container").textContent = searchTerm + " : " + data.current.clouds;
+    console.log(data);
+};
