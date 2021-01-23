@@ -3,52 +3,51 @@
 
 <head>
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
     <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,400i,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
     <link rel="stylesheet" href="assets\css\style.css">
     <title>Weather Bee</title>
 </head>
 
-<body class="flex-column min-100-vh">
+<body class="flex-column min-100-vh bg-dark text-light">
     <header class="hero">
         <h1 class="app-title">
-            <i class="fab fa-forumbee"></i>Weather Bee</h1>
-        <p>Search for a city to find the weather forecasts!
-        </p>
+            <i class="fab fa-forumbee"></i> Weather Bee Dashboard </h1>
+        <p></p>
     </header>
 
 
-    <main class="flex-row justify-space-between">
-        <div class="col-12 col-md-4">
-            <div class="card">
-                <h3 class="card-header text-uppercase">Search By City</h3>
-                <form id="user-form " class="card-body">
-                    <label class="form-label" for="City">City</label>
-                    <input name="City " id="username" type="text" autofocus="true" class="form-input" />
-                    <button type="submit" class="btn">Get Weather!</button>
-                </form>
-            </div>
+    <main class="d-flex justify-content-center bg-light text-dark">
+        <div class="container-fluid">
+            <div class="time-block m-2 row col-12 col-sm-12 no-gutters">
 
-            <div class="card ">
-                <h3 class="card-header text-uppercase">Search History</h3>
-                <div id="language-buttons" class="card-body">
-                    <button data-language="javascript" class="btn">JavaScript</button>
-                    <button data-language="html" class="btn">HTML</button>
-                    <button data-language="css" class="btn">CSS</button>
+                <div id="search-column" class="search-column d-block d-sm-block d-md-block d-lg-block col-4 col-xs-4 col-sm-5 col-lg-3 col-xl-3 px-0">
+                    <h3 class="card-header">Search for a City</h3>
+                    <form id="user-form" class="card-body">
+                        <label class="form-label"><h3>City</h3></label>
+                        <input type="text" id="citySelection" name="citySelection" class="mySearch"/>
+                        <button type="submit" class="btn" id="btn"><i class="fas fa-search"></i></button>
+                    </form>
+                    <span class="history-section" id="history-section"><h4>history</h4></span> </div>
+                <div id="search-result-container" class="search-result-container d-block d-sm-block d-md-block d-lg-block col-6 col-xs-6 col-sm-6 col-lg-8 col-xl-8 px-0">
+                    <h4>Search results</h4>
                 </div>
-            </div>
-        </div>
-
-        <div class="col-12 col-md-8 ">
-            <h2 class="heading-text">Showing weather for: <span id="city-search-term"></span></h2>
-            <div id="weather-report-container " class="list-group">
+                <div id="save-column" class="save-column d-block d-sm-block d-md-block d-lg-block col-2 col-xs-2 col-sm-1 col-lg-1 col-xl-1 px-0">
+                    <h4>Save stuff?</h4>
+                </div>
 
             </div>
         </div>
     </main>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"> 
+  </script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js "></script>
     <script src="assets\js\script.js "></script>
 </body>
 
