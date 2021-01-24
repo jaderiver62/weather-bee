@@ -87,7 +87,8 @@ var displayWeather = function(data, searchTerm) {
 
     var textDivContentEl =document.createElement('div');
     textDivContentEl.className = "text";
-    textDivContentEl.innerHTML = "<p class='description'>" + data.current.weather[0].description + "</p><br><h5>Temperature: " + data.current.temp + " F<br><br>Humidity: " + data.current.humidity + "%<br><br>Wind Speed: " + data.current.wind_speed + " MPH<br><br>UV Index: " + "<span class='badge bg-primary text-light'>" + data.current.uvi + "</span></h5>";
+    var uvBadgeElement = createBadge(data);
+    textDivContentEl.innerHTML = "<p class='description'>" + data.current.weather[0].description + "</p><br><h5>Temperature: " + data.current.temp + " F<br><br>Humidity: " + data.current.humidity + "%<br><br>Wind Speed: " + data.current.wind_speed + " MPH<br><br>UV Index: </h5>" + uvBadgeElement;
 
     textDivEl.appendChild(textDivHeadingEl);
     textDivEl.appendChild(textDivContentEl);
@@ -108,7 +109,7 @@ var displayWeather = function(data, searchTerm) {
 var createForecast = function(data){
     var forecastContainerEl = document.createElement('div');
     forecastContainerEl.className = "row"
-    forecastContainerEl.setAttribute("style","padding: 15px;");
+    forecastContainerEl.setAttribute("style","padding: 15px; width: 100%");
     var forecastHeader = document.createElement("h3");
     forecastHeader.textContent="5-Day Forecast";
     resultMainEl.appendChild(forecastHeader);
@@ -122,16 +123,31 @@ var createForecast = function(data){
         var newColumn = document.createElement('div');
         newColumn.className="col-10 col-sm-10 col-md-2 col-lg-2 col-xl-2";
         
-        newColumn.setAttribute("style", "text-align: center; color: white; padding:0; min-height: 150px; background-color: indigo; margin: auto; max-width: 220px; min-width:220px; border: 20px solid white; margin: 0;");
+        newColumn.setAttribute("style", "text-align: center; color: white; padding:0; min-height: 150px; background-color: indigo; margin: auto; max-width: 200px; border: 10px solid white; min-width: 200px;  margin: auto;");
         var newColumnInterior = document.createElement('div');
         newColumnInterior.className = "div";
-        newColumnInterior.innerHTML = "<p class='date-header'>(" + moment().add(momentIndex, 'd').format('L') + ")</p><br><br><img src='" + forecastLink + "' alt='weather-icon'><br><br><p class='description'>" + data.daily[i].weather[0].description + "</p>Temp: " + data.daily[i].temp.day + "<br>Humidity: " + data.daily[i].humidity;
+        newColumnInterior.innerHTML = "<h4 class='date-header'>(" + moment().add(momentIndex, 'd').format('L') + ")</h4><br><br><img src='" + forecastLink + "' alt='weather-icon'><br><br><p class='description'>" + data.daily[i].weather[0].description + "</p>Temp: " + data.daily[i].temp.day + " F<br>Humidity: " + data.daily[i].humidity + "%";
         newColumn.appendChild(newColumnInterior);
         forecastContainerEl.appendChild(newColumn);
     }
 
     resultMainEl.appendChild(forecastContainerEl);
 
+}
+var createBadge = function(data){
+    var badgeCode = "<h3><span class='badge text-light bg-";
+    var uvValue = data.current.uvi;
+    if(uvValue<=2){
+        badgeCode += "success";
+    } else if(uvValue<=5){
+        badgeCode += "secondary";
+    } else if(uvValue<=7){
+        badgeCode += "warning";
+    } else{
+        badgeCode += "danger";
+    }
+    badgeCode += "'>" + uvValue + "</span></h3>";
+    return badgeCode;
 }
 // Saving
 // Loading
