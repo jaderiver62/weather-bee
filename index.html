@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
     <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,400i,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
-    <link rel="stylesheet" href="assets\css\style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
     <title>Weather Bee</title>
 </head>
 
@@ -26,22 +26,27 @@
 
     <main class="d-flex justify-content-center bg-light text-dark">
         <div class="container-fluid">
-            <div class="time-block m-2 row col-12 col-sm-12">
+            <div class="content-block m-2 row col-12 col-sm-12">
 
-                <div id="search-column" class="search-column d-block d-sm-block d-md-block d-lg-block col-4 col-xs-4 col-sm-4 col-lg-4 col-xl-4">
+                <div id="search-column" class="search-column col-12 col-xs-12 col-sm-12 col-lg-3 col-xl-3">
                     <h3 class="card-header">Search for a City</h3>
+                    
                     <form id="user-form" class="card-body">
                         <label class="form-label"><h3>City</h3></label>
                         <input type="text" id="citySelection" name="citySelection" class="mySearch" />
                         <button type="submit" class="btn" id="btn"><i class="fas fa-search"></i></button>
                     </form>
-                    <span class="history-section" id="history-section"><h4>history</h4></span> </div>
-                <div id="search-result-container" class="search-result-container d-block d-sm-block d-md-block d-lg-block col-6 col-xs-6 col-sm-6 col-lg-6 col-xl-6">
-
+                    <h8>Note: Enter a state or country to narrow your search if a city has more than one location</h8>
+                    <div class="history-section" id="history-section"></div>
                 </div>
-
-
+                   
+                <div id="search-result-container" class="search-result-container col-12 col-xs-12 col-sm-12 col-lg-9 col-xl-9">
+                </div>
+                <span id="forecast-result-container" class="forecast-result-container col-12 col-xs-12 col-sm-12 col-lg-9 col-xl-9">
+                </span>
+               
             </div>
+            
         </div>
     </main>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js ">
