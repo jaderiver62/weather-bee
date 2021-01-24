@@ -87,7 +87,7 @@ var displayWeather = function(data, searchTerm) {
 
     var textDivContentEl =document.createElement('div');
     textDivContentEl.className = "text";
-    textDivContentEl.innerHTML = "<p class='description'>" + data.current.weather[0].description + "</p><br><br><br><h5>Temperature: " + data.current.temp + " F<br><br>Humidity: " + data.current.humidity + "%<br><br>Wind Speed: " + data.current.wind_speed + " MPH<br><br>UV Index: " + "<span class='badge bg-primary text-light'>" + data.current.uvi + "</span></h5>";
+    textDivContentEl.innerHTML = "<p class='description'>" + data.current.weather[0].description + "</p><br><h5>Temperature: " + data.current.temp + " F<br><br>Humidity: " + data.current.humidity + "%<br><br>Wind Speed: " + data.current.wind_speed + " MPH<br><br>UV Index: " + "<span class='badge bg-primary text-light'>" + data.current.uvi + "</span></h5>";
 
     textDivEl.appendChild(textDivHeadingEl);
     textDivEl.appendChild(textDivContentEl);
@@ -108,10 +108,10 @@ var displayWeather = function(data, searchTerm) {
 var createForecast = function(data){
     var forecastContainerEl = document.createElement('div');
     forecastContainerEl.className = "row"
-    forecastContainerEl.setAttribute("style","padding: 15px; display:flex; align-items: center; justify-content: center;");
+    forecastContainerEl.setAttribute("style","padding: 15px;");
     var forecastHeader = document.createElement("h3");
     forecastHeader.textContent="5-Day Forecast";
-    forecastContainerEl.appendChild
+    resultMainEl.appendChild(forecastHeader);
 
     for(var i=0; i<5; i++){
         var momentIndex = i+1;
@@ -125,7 +125,7 @@ var createForecast = function(data){
         newColumn.setAttribute("style", "text-align: center; color: white; padding:0; min-height: 150px; background-color: indigo; margin: auto; max-width: 200px; min-width:200px; border: 20px solid white; margin: 0;");
         var newColumnInterior = document.createElement('div');
         newColumnInterior.className = "div";
-        newColumnInterior.innerHTML = "(" + moment().add(momentIndex, 'd').format('L') + ")<br><br><img src='" + forecastLink + "' alt='weather-icon'><h6 class='description'>" + data.daily[i].weather[0].description + "</h6>";
+        newColumnInterior.innerHTML = "<p class='date-header'>(" + moment().add(momentIndex, 'd').format('L') + ")</p><br><br><img src='" + forecastLink + "' alt='weather-icon'><br><br><p class='description'>" + data.daily[i].weather[0].description + "</p>Temp: " + data.daily[i].temp.day + "<br>Humidity: " + data.daily[i].humidity;
         newColumn.appendChild(newColumnInterior);
         forecastContainerEl.appendChild(newColumn);
     }
