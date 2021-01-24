@@ -1,3 +1,8 @@
+var weatherArray = [];
+
+var weatherObj={
+
+}
 var searchBtn = document.getElementById("btn");
 
 var searchHandler = function(event) {
@@ -21,6 +26,7 @@ var getCoordinates = function(input) {
         // request was successful
         if (response.ok) {
             response.json().then(function(data) {
+                input = data.results[0].formatted;
                 getWeather(data, input);
             });
         } else {
@@ -50,6 +56,7 @@ var getWeather = function(data, searchTerm) {
 
 };
 var displayWeather = function(data, searchTerm) {
+    /*
     searchTerm = searchTerm.charAt(0).toUpperCase() + searchTerm.slice(1);
     var capitalizeTerms = searchTerm.split(" ");
 
@@ -57,6 +64,7 @@ var displayWeather = function(data, searchTerm) {
         capitalizeTerms[i] = capitalizeTerms[i][0].toUpperCase() + capitalizeTerms[i].substr(1);
     }
     searchTerm = capitalizeTerms.join(" ");
+    */
 
     var resultMainEl = document.getElementById("search-result-container");
     resultMainEl.setAttribute("style", "border: 1px solid black; padding: 10px 10px; display: inline-block;");
@@ -80,15 +88,15 @@ var displayWeather = function(data, searchTerm) {
     resultTopDivEl.className = "top-result d-flex justify-contents-around";
     var textDivHeadingEl = document.createElement('div');
     textDivHeadingEl.className = "text";
-    textDivHeadingEl.innerHTML = "<h2>" + searchTerm + "  (" + moment().format('L') + ") </h2>";
+    textDivHeadingEl.innerHTML = "<h2>" + searchTerm + "  (" + moment().format('L') + ") </h2><br>";
 
     var textDivContentEl =document.createElement('div');
     textDivContentEl.className = "text";
-    textDivContentEl.innerHTML = "<br><br><br><h5>Temperature: " + data.current.temp + " F<br><br>Humidity: "+ data.current.humidity +"%<br><br>Wind Speed: "+ data.current.wind_speed + " MPH<br><br>UV Index: " + data.current.uvi + "</h5>";
+    textDivContentEl.innerHTML = "<p class='description'>" + data.current.weather[0].description + "</p><br><br><br><h5>Temperature: " + data.current.temp + " F<br><br>Humidity: " + data.current.humidity + "%<br><br>Wind Speed: " + data.current.wind_speed + " MPH<br><br>UV Index: " + "<span class='badge bg-primary text-light'>" + data.current.uvi + "</span></h5>";
 
     textDivEl.appendChild(textDivHeadingEl);
     textDivEl.appendChild(textDivContentEl);
-    
+
     imageDivEl.appendChild(myIconEl);
 
     resultTopDivEl.appendChild(textDivEl);
