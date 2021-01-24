@@ -61,11 +61,29 @@ var displayWeather = function(data, searchTerm) {
     var resultMainEl = document.getElementById("search-result-container");
     resultMainEl.setAttribute("style", "border: 1px solid black; padding: 10px 10px; display: inline-block;");
     var resultTopDivEl = document.createElement("div");
+    resultTopDivEl.className = "container";
+    resultTopDivEl.setAttribute("style","padding: 10px; display: flex; align-items: center; justify-content: center");
+    
+    var textDivEl= document.createElement('div');
+    textDivEl.className = "text";
+
+    var imageDivEl = document.createElement('div');
+    imageDivEl.className = "image";
+
     var myIconEl = document.createElement('img');
-    myIconEl.src = "http://openweathermap.org/img/wn/01d@2x.png";
+    // myIconEl.setAttribute("style","padding: 0;");
+
+    var iconIdEl = data.current.weather[0].icon;
+    var link = "http://openweathermap.org/img/wn/" + iconIdEl + "@2x.png";
+    myIconEl.src = link;
+    
     resultTopDivEl.className = "top-result d-flex justify-contents-around";
-    resultTopDivEl.innerHTML = "<h3>" + searchTerm + "  (" + moment().format('L') + ") ";
-    resultTopDivEl.appendChild(myIconEl);
+    textDivEl.innerHTML = "<h2>" + searchTerm + "  (" + moment().format('L') + ") </h2>";
+    
+    imageDivEl.appendChild(myIconEl);
+
+    resultTopDivEl.appendChild(textDivEl);
+    resultTopDivEl.appendChild(imageDivEl);
     resultMainEl.appendChild(resultTopDivEl);
 
     console.log(data);
