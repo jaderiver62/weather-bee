@@ -56,7 +56,9 @@ var getWeather = function(data, searchTerm) {
 var displayWeather = function(data, searchTerm) {
     
 
-    
+    weatherArray.push(searchTerm);
+    saveSearch();
+
     resultMainEl.setAttribute("style", "border: 1px solid black; padding: 10px 10px; display: inline-block;");
 
     var resultTopDivEl = document.createElement("div");
@@ -133,7 +135,8 @@ var createForecast = function(data){
 
     resultMainEl.appendChild(forecastContainerEl);
 
-}
+
+};
 var createBadge = function(data){
     var badgeCode = "<h3><span class='badge text-light bg-";
     var uvValue = data.current.uvi;
@@ -148,7 +151,32 @@ var createBadge = function(data){
     }
     badgeCode += "'>" + uvValue + "</span></h3>";
     return badgeCode;
+};
+
+function saveSearch() {
+    localStorage.setItem("weatherArray", JSON.stringify(weatherArray));
+    console.log("search recorded");
 }
+function loadSearch(){
+    var savedSearches =JSON.parse(localStorage.getItem("weatherArray"));
+
+    if(savedSearches){
+        weatherArray = savedSearches;
+        var string = "";
+        var historyDivEl = document.getElementById("history-section");
+        for (var i=0; i < weatherArray.length; i++){
+            string +=weatherArray[i] + " ";
+            console.log(weatherArray[i]);
+        }
+        historyDivEl.innerHTML = string;
+    } else {return false;}
+    console.log("Search History Found...");
+    weatherArray = JSON.parse(savedSearches);
+    console.log(weatherArray);
+
+}
+
+loadSearch();
 // Saving
 // Loading
 // History
