@@ -1,5 +1,6 @@
 var weatherArray = [];
 
+var resultMainEl = document.getElementById("search-result-container");
 
 var searchBtn = document.getElementById("btn");
 
@@ -55,11 +56,14 @@ var getWeather = function(data, searchTerm) {
 var displayWeather = function(data, searchTerm) {
     
 
-    var resultMainEl = document.getElementById("search-result-container");
+    
     resultMainEl.setAttribute("style", "border: 1px solid black; padding: 10px 10px; display: inline-block;");
+
     var resultTopDivEl = document.createElement("div");
+    
     resultTopDivEl.className = "container";
     resultTopDivEl.setAttribute("style","padding: 10px; display: flex;");
+    resultTopDivEl.className = "top-result d-flex justify-contents-around";
     
     var textDivEl= document.createElement('div');
     textDivEl.className = "text";
@@ -71,10 +75,12 @@ var displayWeather = function(data, searchTerm) {
     
 
     var iconIdEl = data.current.weather[0].icon;
+
     var link = "http://openweathermap.org/img/wn/" + iconIdEl + "@2x.png";
+
     myIconEl.src = link;
-    
-    resultTopDivEl.className = "top-result d-flex justify-contents-around";
+
+
     var textDivHeadingEl = document.createElement('div');
     textDivHeadingEl.className = "text";
     textDivHeadingEl.innerHTML = "<h2>" + searchTerm + "  (" + moment().format('L') + ") </h2><br>";
@@ -92,7 +98,34 @@ var displayWeather = function(data, searchTerm) {
     resultTopDivEl.appendChild(imageDivEl);
     resultMainEl.appendChild(resultTopDivEl);
 
+    createForecast(data);
+
     console.log(data);
 
 };
+
+// Forecast
+var createForecast = function(data){
+    var forecastContainerEl = document.createElement('div');
+    forecastContainerEl.className = "container forecast ccol-12 col-xs-12 col-sm-12 col-lg-8 col-xl-8"
+    forecastContainerEl.textContent = "5-Day Forecast";
+    var forecastRowEl = document.createElement('div');
+    forecastRowEl.className = "row";
+    for(var i=0; i<5; i++){
+        var newColumn = document.createElement('div');
+        newColumn.className="col  justify-content-between";
+        var newColumnInterior = document.createElement('div');
+        newColumnInterior.setAttribute("style", "color: white; background-color: indigo;");
+        newColumnInterior.className = "card";
+        newColumnInterior.textContent = data.current.weather[0].description;
+        newColumn.appendChild(newColumnInterior);
+        forecastRowEl.appendChild(newColumn);
+    }
+    forecastContainerEl.appendChild(forecastRowEl);
+    resultMainEl.appendChild(forecastContainerEl);
+
+}
+// Saving
+// Loading
+// History
 
