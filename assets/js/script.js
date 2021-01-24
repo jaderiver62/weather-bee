@@ -107,17 +107,18 @@ var displayWeather = function(data, searchTerm) {
 // Forecast
 var createForecast = function(data){
     var forecastContainerEl = document.createElement('div');
-    forecastContainerEl.className = "container forecast ccol-12 col-xs-12 col-sm-12 col-lg-8 col-xl-8"
-    forecastContainerEl.textContent = "5-Day Forecast";
+    forecastContainerEl.className = "container forecast col-12 col-xs-12 col-sm-12 col-lg-8 col-xl-8"
+    forecastContainerEl.innerHTML = "<h3>5-Day Forecast</h3>";
     var forecastRowEl = document.createElement('div');
     forecastRowEl.className = "row";
     for(var i=0; i<5; i++){
         var newColumn = document.createElement('div');
-        newColumn.className="col  justify-content-between";
+        newColumn.className="col col-12 col-sm-4 col-md-2 col-lg-2 col-xl-2 justify-content-between";
+        
+        newColumn.setAttribute("style", "text-align: center; color: white; padding:0; min-height: 150px; background-color: indigo; min-width: 140px; border: 10px solid white; ");
         var newColumnInterior = document.createElement('div');
-        newColumnInterior.setAttribute("style", "color: white; background-color: indigo;");
-        newColumnInterior.className = "card";
-        newColumnInterior.textContent = data.current.weather[0].description;
+        newColumnInterior.className = "col";
+        newColumnInterior.innerHTML = "(" + moment().add(1, 'd').format('L') + ")<br><br>" + data.daily[i].weather[0].description;
         newColumn.appendChild(newColumnInterior);
         forecastRowEl.appendChild(newColumn);
     }
