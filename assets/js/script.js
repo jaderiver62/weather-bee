@@ -1,20 +1,5 @@
 var searchBtn = document.getElementById("btn");
 
-<<<<<<< HEAD
-var searchHandler= function(event) {
-    event.preventDefault();
-    var resultEl = document.getElementById("search-result-container");
-    var inputContent = document.getElementById("citySelection").value;
-    if(inputContent){
-        getCoordinates(inputContent);
-        
-    
-  };
-};
-searchBtn.addEventListener("click", searchHandler);
-
-var getCoordinates = function(input){
-=======
 var searchHandler = function(event) {
     event.preventDefault();
     var resultEl = document.getElementById("search-result-container");
@@ -28,7 +13,6 @@ var searchHandler = function(event) {
 searchBtn.addEventListener("click", searchHandler);
 
 var getCoordinates = function(input) {
->>>>>>> a187d85f395295ea3f3cdd6c963f85211f8ffb25
     console.log(input);
     var apiUrl = "https://api.opencagedata.com/geocode/v1/json?q=" + input + "&key=974cf3d56a9f45d58e79a7ec8b1f7842";
 
@@ -37,9 +21,6 @@ var getCoordinates = function(input) {
         // request was successful
         if (response.ok) {
             response.json().then(function(data) {
-<<<<<<< HEAD
-                displayWeather(data, input);
-=======
                 getWeather(data, input);
             });
         } else {
@@ -61,21 +42,11 @@ var getWeather = function(data, searchTerm) {
         if (response.ok) {
             response.json().then(function(data) {
                 displayWeather(data, searchTerm);
->>>>>>> a187d85f395295ea3f3cdd6c963f85211f8ffb25
             });
         } else {
             alert("Error: " + response.statusText);
         }
     });
-<<<<<<< HEAD
-};
-// https://api.openweathermap.org/data/2.5/onecall?lat=33.441792&lon=-94.037689&exclude=hourly,daily&appid=3812ea6836536b0581712ffd66f54fa5    
-var displayWeather = function(data, searchTerm) {
-    // check if api returned any repos
-    console.log(data);
-    document.getElementById("search-result-container").textContent = searchTerm + " : " + "smegs lat=" + data.results[0].geometry.lat + " lng=" + data.results[0].geometry.lng /*data.current.clouds*/;
-
-=======
 
 };
 var displayWeather = function(data, searchTerm) {
@@ -99,14 +70,8 @@ var displayWeather = function(data, searchTerm) {
 
     console.log(data);
     /* 10d */
->>>>>>> a187d85f395295ea3f3cdd6c963f85211f8ffb25
 };
 var getIcon = function(iconNumber) {
     /*    if (iconNumber === )*/
 
-<<<<<<< HEAD
-
-
-=======
 };
->>>>>>> a187d85f395295ea3f3cdd6c963f85211f8ffb25
