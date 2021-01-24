@@ -78,7 +78,16 @@ var displayWeather = function(data, searchTerm) {
     myIconEl.src = link;
     
     resultTopDivEl.className = "top-result d-flex justify-contents-around";
-    textDivEl.innerHTML = "<h2>" + searchTerm + "  (" + moment().format('L') + ") </h2><br><br><br><h5>Temperature: " + data.current.temp + " F<br><br>Humidity: "+ data.current.humidity +"%<br><br>Wind Speed: "+ data.current.wind_speed + " MPH<br><br>UV Index: " + data.current.uvi + "</h5>";
+    var textDivHeadingEl = document.createElement('div');
+    textDivHeadingEl.className = "text";
+    textDivHeadingEl.innerHTML = "<h2>" + searchTerm + "  (" + moment().format('L') + ") </h2>";
+
+    var textDivContentEl =document.createElement('div');
+    textDivContentEl.className = "text";
+    textDivContentEl.innerHTML = "<br><br><br><h5>Temperature: " + data.current.temp + " F<br><br>Humidity: "+ data.current.humidity +"%<br><br>Wind Speed: "+ data.current.wind_speed + " MPH<br><br>UV Index: " + data.current.uvi + "</h5>";
+
+    textDivEl.appendChild(textDivHeadingEl);
+    textDivEl.appendChild(textDivContentEl);
     
     imageDivEl.appendChild(myIconEl);
 
