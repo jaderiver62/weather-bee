@@ -125,7 +125,7 @@ var createForecast = function(data){
         newColumn.setAttribute("style", "text-align: center; color: white; padding:0; min-height: 150px; background-color: indigo; margin: auto; max-width: 200px; border: 10px solid white; min-width: 200px;  margin: auto;");
         var newColumnInterior = document.createElement('div');
         newColumnInterior.className = "div";
-        newColumnInterior.innerHTML = "<p class='date-header'>(" + moment().add(momentIndex, 'd').format('L') + ")</p><br><br><img src='" + forecastLink + "' alt='weather-icon'><br><br><p class='description'>" + data.daily[i].weather[0].description + "</p>Temp: " + data.daily[i].temp.day + "<br>Humidity: " + data.daily[i].humidity;
+        newColumnInterior.innerHTML = "<h4 class='date-header'>(" + moment().add(momentIndex, 'd').format('L') + ")</h4><br><br><img src='" + forecastLink + "' alt='weather-icon'><br><br><p class='description'>" + data.daily[i].weather[0].description + "</p>Temp: " + data.daily[i].temp.day + " F<br>Humidity: " + data.daily[i].humidity + "%";
         newColumn.appendChild(newColumnInterior);
         forecastContainerEl.appendChild(newColumn);
     }
