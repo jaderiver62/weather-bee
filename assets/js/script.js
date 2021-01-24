@@ -56,6 +56,7 @@ var getWeather = function(data, searchTerm) {
 var displayWeather = function(data, searchTerm) {
     resultMainEl.innerHTML = "";
 
+
     weatherArray.push(searchTerm);
     saveSearch();
 
@@ -68,13 +69,18 @@ var displayWeather = function(data, searchTerm) {
     resultTopDivEl.className = "top-result d-flex justify-contents-around";
 
     var textDivEl = document.createElement('div');
+    resultTopDivEl.className = "container";
+    resultTopDivEl.setAttribute("style", "padding: 10px; display: flex;");
+    resultTopDivEl.className = "top-result d-flex justify-contents-around";
+
+    var textDivEl = document.createElement('div');
+
     textDivEl.className = "text";
 
     var imageDivEl = document.createElement('div');
     imageDivEl.className = "image";
 
     var myIconEl = document.createElement('img');
-
 
     var iconIdEl = data.current.weather[0].icon;
 
@@ -87,7 +93,9 @@ var displayWeather = function(data, searchTerm) {
     textDivHeadingEl.className = "text";
     textDivHeadingEl.innerHTML = "<h2>" + searchTerm + "  (" + moment().format('L') + ") </h2><br>";
 
+
     var textDivContentEl = document.createElement('div');
+
     textDivContentEl.className = "text";
     var uvBadgeElement = createBadge(data);
     textDivContentEl.innerHTML = "<p class='description'>" + data.current.weather[0].description + "</p><br><h5>Temperature: " + data.current.temp + " F<br><br>Humidity: " + data.current.humidity + "%<br><br>Wind Speed: " + data.current.wind_speed + " MPH<br><br>UV Index: </h5>" + uvBadgeElement;
@@ -153,6 +161,56 @@ var createBadge = function(data) {
     return badgeCode;
 };
 
+
+
+// Forecast
+var createForecast = function(data) {
+    var forecastContainerEl = document.createElement('div');
+    forecastContainerEl.className = "row"
+    forecastContainerEl.setAttribute("style", "padding: 15px; width: 100%");
+    var forecastHeader = document.createElement("h3");
+    forecastHeader.textContent = "5-Day Forecast";
+    resultMainEl.appendChild(forecastHeader);
+
+    for (var i = 0; i < 5; i++) {
+        var momentIndex = i + 1;
+        var forecastIcon = data.daily[i].weather[0].icon;
+
+        var forecastLink = "http://openweathermap.org/img/wn/" + forecastIcon + "@2x.png";
+
+        var newColumn = document.createElement('div');
+        newColumn.className = "col-10 col-sm-10 col-md-2 col-lg-2 col-xl-2";
+
+        newColumn.setAttribute("style", "text-align: center; color: white; padding:0; min-height: 150px; background-color: indigo; margin: auto; max-width: 200px; border: 10px solid white; min-width: 200px;  margin: auto;");
+        var newColumnInterior = document.createElement('div');
+        newColumnInterior.className = "div";
+        newColumnInterior.innerHTML = "<h4 class='date-header'>(" + moment().add(momentIndex, 'd').format('L') + ")</h4><br><br><img src='" + forecastLink + "' alt='weather-icon'><br><br><p class='description'>" + data.daily[i].weather[0].description + "</p>Temp: " + data.daily[i].temp.day + " F<br>Humidity: " + data.daily[i].humidity + "%";
+        newColumn.appendChild(newColumnInterior);
+        forecastContainerEl.appendChild(newColumn);
+    }
+
+    resultMainEl.appendChild(forecastContainerEl);
+
+
+};
+var createBadge = function(data) {
+    var badgeCode = "<h3><span class='badge text-light bg-";
+    var uvValue = data.current.uvi;
+    if (uvValue <= 2) {
+        badgeCode += "success";
+    } else if (uvValue <= 5) {
+        badgeCode += "secondary";
+    } else if (uvValue <= 7) {
+        badgeCode += "warning";
+    } else {
+        badgeCode += "danger";
+    }
+    badgeCode += "'>" + uvValue + "</span></h3>";
+    return badgeCode;
+};
+
+
+
 function saveSearch() {
     localStorage.setItem("weatherArray", JSON.stringify(weatherArray));
     console.log("search recorded");
@@ -176,7 +234,7 @@ function loadSearch() {
     console.log(weatherArray);
 
 }
-createHistory();
+
 loadSearch();
 setInterval(function() {
     window.location.reload();
