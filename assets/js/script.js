@@ -120,9 +120,9 @@ var createForecast = function(data){
         var forecastLink = "http://openweathermap.org/img/wn/" + forecastIcon + "@2x.png";
 
         var newColumn = document.createElement('div');
-        newColumn.className="col";
+        newColumn.className="col-10 col-sm-10 col-md-2 col-lg-2 col-xl-2";
         
-        newColumn.setAttribute("style", "text-align: center; color: white; padding:0; min-height: 150px; background-color: indigo; margin: auto; max-width: 200px; min-width:200px; border: 20px solid white; margin: 0;");
+        newColumn.setAttribute("style", "text-align: center; color: white; padding:0; min-height: 150px; background-color: indigo; margin: auto; max-width: 220px; min-width:220px; border: 20px solid white; margin: 0;");
         var newColumnInterior = document.createElement('div');
         newColumnInterior.className = "div";
         newColumnInterior.innerHTML = "<p class='date-header'>(" + moment().add(momentIndex, 'd').format('L') + ")</p><br><br><img src='" + forecastLink + "' alt='weather-icon'><br><br><p class='description'>" + data.daily[i].weather[0].description + "</p>Temp: " + data.daily[i].temp.day + "<br>Humidity: " + data.daily[i].humidity;
