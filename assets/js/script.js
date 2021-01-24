@@ -125,7 +125,7 @@ var createForecast = function(data){
         newColumn.setAttribute("style", "text-align: center; color: white; padding:0; min-height: 150px; background-color: indigo; margin: auto; max-width: 200px; min-width:200px; border: 20px solid white; margin: 0;");
         var newColumnInterior = document.createElement('div');
         newColumnInterior.className = "div";
-        newColumnInterior.innerHTML = "(" + moment().add(momentIndex, 'd').format('L') + ")<br><br><img src='" + forecastLink + "' alt='weather-icon'><span class='description'>" + data.daily[i].weather[0].description + "</span>";
+        newColumnInterior.innerHTML = "(" + moment().add(momentIndex, 'd').format('L') + ")<br><br><img src='" + forecastLink + "' alt='weather-icon'><h6 class='description'>" + data.daily[i].weather[0].description + "</h6>";
         newColumn.appendChild(newColumnInterior);
         forecastContainerEl.appendChild(newColumn);
     }
