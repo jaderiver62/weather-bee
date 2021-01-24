@@ -87,7 +87,8 @@ var displayWeather = function(data, searchTerm) {
 
     var textDivContentEl =document.createElement('div');
     textDivContentEl.className = "text";
-    textDivContentEl.innerHTML = "<p class='description'>" + data.current.weather[0].description + "</p><br><h5>Temperature: " + data.current.temp + " F<br><br>Humidity: " + data.current.humidity + "%<br><br>Wind Speed: " + data.current.wind_speed + " MPH<br><br>UV Index: " + "<span class='badge bg-primary text-light'>" + data.current.uvi + "</span></h5>";
+    var uvBadgeElement = createBadge(data);
+    textDivContentEl.innerHTML = "<p class='description'>" + data.current.weather[0].description + "</p><br><h5>Temperature: " + data.current.temp + " F<br><br>Humidity: " + data.current.humidity + "%<br><br>Wind Speed: " + data.current.wind_speed + " MPH<br><br>UV Index: </h5>" + uvBadgeElement;
 
     textDivEl.appendChild(textDivHeadingEl);
     textDivEl.appendChild(textDivContentEl);
@@ -132,6 +133,21 @@ var createForecast = function(data){
 
     resultMainEl.appendChild(forecastContainerEl);
 
+}
+var createBadge = function(data){
+    var badgeCode = "<h3><span class='badge text-light bg-";
+    var uvValue = data.current.uvi;
+    if(uvValue<=2){
+        badgeCode += "success";
+    } else if(uvValue<=5){
+        badgeCode += "secondary";
+    } else if(uvValue<=7){
+        badgeCode += "warning";
+    } else{
+        badgeCode += "danger";
+    }
+    badgeCode += "'>" + uvValue + "</span></h3>";
+    return badgeCode;
 }
 // Saving
 // Loading
