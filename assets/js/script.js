@@ -107,22 +107,29 @@ var displayWeather = function(data, searchTerm) {
 // Forecast
 var createForecast = function(data){
     var forecastContainerEl = document.createElement('div');
-    forecastContainerEl.className = "container forecast col-12 col-xs-12 col-sm-12 col-lg-8 col-xl-8"
-    forecastContainerEl.innerHTML = "<h3>5-Day Forecast</h3>";
-    var forecastRowEl = document.createElement('div');
-    forecastRowEl.className = "row";
+    forecastContainerEl.className = "row"
+    forecastContainerEl.setAttribute("style","padding: 15px; display:flex; align-items: center; justify-content: center;");
+    var forecastHeader = document.createElement("h3");
+    forecastHeader.textContent="5-Day Forecast";
+    forecastContainerEl.appendChild
+
     for(var i=0; i<5; i++){
+        var momentIndex = i+1;
+        var forecastIcon = data.daily[i].weather[0].icon;
+
+        var forecastLink = "http://openweathermap.org/img/wn/" + forecastIcon + "@2x.png";
+
         var newColumn = document.createElement('div');
-        newColumn.className="col col-12 col-sm-4 col-md-2 col-lg-2 col-xl-2 justify-content-between";
+        newColumn.className="col";
         
-        newColumn.setAttribute("style", "text-align: center; color: white; padding:0; min-height: 150px; background-color: indigo; min-width: 140px; border: 10px solid white; ");
+        newColumn.setAttribute("style", "text-align: center; color: white; padding:0; min-height: 150px; background-color: indigo; margin: auto; max-width: 200px; min-width:200px; border: 20px solid white; margin: 0;");
         var newColumnInterior = document.createElement('div');
-        newColumnInterior.className = "col";
-        newColumnInterior.innerHTML = "(" + moment().add(1, 'd').format('L') + ")<br><br>" + data.daily[i].weather[0].description;
+        newColumnInterior.className = "div";
+        newColumnInterior.innerHTML = "(" + moment().add(momentIndex, 'd').format('L') + ")<br><br><img src='" + forecastLink + "' alt='weather-icon'><span class='description'>" + data.daily[i].weather[0].description + "</span>";
         newColumn.appendChild(newColumnInterior);
-        forecastRowEl.appendChild(newColumn);
+        forecastContainerEl.appendChild(newColumn);
     }
-    forecastContainerEl.appendChild(forecastRowEl);
+
     resultMainEl.appendChild(forecastContainerEl);
 
 }
