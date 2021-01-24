@@ -28,13 +28,13 @@ var getCoordinates = function(input) {
         }
     });
 };
-// 33.441792-94.037689&exclude=hourly,daily&appid=3812ea6836536b0581712ffd66f54fa5    
+
 var getWeather = function(data, searchTerm) {
     // check if api returned any repos
     console.log(data);
     var latEl = data.results[0].geometry.lat;
     var lngEl = data.results[0].geometry.lng;
-    var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + latEl + "&lon=" + lngEl + "&appid=3812ea6836536b0581712ffd66f54fa5";
+    var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + latEl + "&lon=" + lngEl + "&appid=3812ea6836536b0581712ffd66f54fa5&units=imperial";
 
     // make a get request to url
     fetch(apiUrl).then(function(response) {
@@ -53,7 +53,7 @@ var displayWeather = function(data, searchTerm) {
     searchTerm = searchTerm.charAt(0).toUpperCase() + searchTerm.slice(1);
     var capitalizeTerms = searchTerm.split(" ");
 
-    for (let i = 0; i < capitalizeTerms.length; i++) {
+    for (var i = 0; i < capitalizeTerms.length; i++) {
         capitalizeTerms[i] = capitalizeTerms[i][0].toUpperCase() + capitalizeTerms[i].substr(1);
     }
     searchTerm = capitalizeTerms.join(" ");
@@ -62,7 +62,7 @@ var displayWeather = function(data, searchTerm) {
     resultMainEl.setAttribute("style", "border: 1px solid black; padding: 10px 10px; display: inline-block;");
     var resultTopDivEl = document.createElement("div");
     resultTopDivEl.className = "container";
-    resultTopDivEl.setAttribute("style","padding: 10px; display: flex; align-items: center; justify-content: center");
+    resultTopDivEl.setAttribute("style","padding: 10px; display: flex;");
     
     var textDivEl= document.createElement('div');
     textDivEl.className = "text";
@@ -78,7 +78,7 @@ var displayWeather = function(data, searchTerm) {
     myIconEl.src = link;
     
     resultTopDivEl.className = "top-result d-flex justify-contents-around";
-    textDivEl.innerHTML = "<h2>" + searchTerm + "  (" + moment().format('L') + ") </h2>";
+    textDivEl.innerHTML = "<h2>" + searchTerm + "  (" + moment().format('L') + ") </h2><br><br><br><h5>Temperature: " + data.current.temp + " F<br><br>Humidity: "+ data.current.humidity +"%<br><br>Wind Speed: "+ data.current.wind_speed + " MPH<br><br>UV Index: " + data.current.uvi + "</h5>";
     
     imageDivEl.appendChild(myIconEl);
 
@@ -87,9 +87,5 @@ var displayWeather = function(data, searchTerm) {
     resultMainEl.appendChild(resultTopDivEl);
 
     console.log(data);
-    /* 10d */
-};
-var getIcon = function(iconNumber) {
-    /*    if (iconNumber === )*/
 
 };
