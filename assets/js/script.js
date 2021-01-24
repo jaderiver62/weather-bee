@@ -63,7 +63,7 @@ var displayWeather = function(data, searchTerm) {
     var resultTopDivEl = document.createElement("div");
     var myIconEl = document.createElement('img');
     myIconEl.src = "http://openweathermap.org/img/wn/01d@2x.png";
-    resultTopDivEl.className = "top-result";
+    resultTopDivEl.className = "top-result d-flex justify-contents-around";
     resultTopDivEl.innerHTML = "<h3>" + searchTerm + "  (" + moment().format('L') + ") ";
     resultTopDivEl.appendChild(myIconEl);
     resultMainEl.appendChild(resultTopDivEl);
