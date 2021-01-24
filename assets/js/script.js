@@ -1,3 +1,7 @@
+var weatherArray = [];
+
+var resultMainEl = document.getElementById("search-result-container");
+
 var searchBtn = document.getElementById("btn");
 
 var searchHandler = function(event) {
@@ -16,11 +20,11 @@ var getCoordinates = function(input) {
     console.log(input);
     var apiUrl = "https://api.opencagedata.com/geocode/v1/json?q=" + input + "&key=974cf3d56a9f45d58e79a7ec8b1f7842";
 
-    // make a get request to url
     fetch(apiUrl).then(function(response) {
-        // request was successful
+
         if (response.ok) {
             response.json().then(function(data) {
+                input = data.results[0].formatted;
                 getWeather(data, input);
             });
         } else {
@@ -28,17 +32,17 @@ var getCoordinates = function(input) {
         }
     });
 };
-// 33.441792-94.037689&exclude=hourly,daily&appid=3812ea6836536b0581712ffd66f54fa5    
+
 var getWeather = function(data, searchTerm) {
-    // check if api returned any repos
+
     console.log(data);
     var latEl = data.results[0].geometry.lat;
     var lngEl = data.results[0].geometry.lng;
-    var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + latEl + "&lon=" + lngEl + "&appid=3812ea6836536b0581712ffd66f54fa5";
+    var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + latEl + "&lon=" + lngEl + "&appid=3812ea6836536b0581712ffd66f54fa5&units=imperial";
 
-    // make a get request to url
+
     fetch(apiUrl).then(function(response) {
-        // request was successful
+
         if (response.ok) {
             response.json().then(function(data) {
                 displayWeather(data, searchTerm);
@@ -50,29 +54,133 @@ var getWeather = function(data, searchTerm) {
 
 };
 var displayWeather = function(data, searchTerm) {
-    searchTerm = searchTerm.charAt(0).toUpperCase() + searchTerm.slice(1);
-    var capitalizeTerms = searchTerm.split(" ");
+    resultMainEl.innerHTML = "";
 
-    for (let i = 0; i < capitalizeTerms.length; i++) {
-        capitalizeTerms[i] = capitalizeTerms[i][0].toUpperCase() + capitalizeTerms[i].substr(1);
-    }
-    searchTerm = capitalizeTerms.join(" ");
+    weatherArray.push(searchTerm);
+    saveSearch();
 
-    var resultMainEl = document.getElementById("search-result-container");
-    resultMainEl.setAttribute("style", "border: 1px solid black; padding: 10px 10px; display: inline-grid;");
+    resultMainEl.setAttribute("style", "border: 1px solid black; padding: 10px 10px; display: inline-block;");
+
     var resultTopDivEl = document.createElement("div");
+
+    resultTopDivEl.className = "container";
+    resultTopDivEl.setAttribute("style", "padding: 10px; display: flex;");
+    resultTopDivEl.className = "top-result d-flex justify-contents-around";
+
+    var textDivEl = document.createElement('div');
+    textDivEl.className = "text";
+
+    var imageDivEl = document.createElement('div');
+    imageDivEl.className = "image";
+
     var myIconEl = document.createElement('img');
-    var weatherIconCode = data.current.weather[0].icon;
-    myIconEl.src = "http://openweathermap.org/img/wn/" + weatherIconCode + "@2x.png";
-    resultTopDivEl.className = "top-result";
-    resultTopDivEl.innerHTML = "<h3>" + searchTerm + "  (" + moment().format('L') + ") ";
-    resultTopDivEl.appendChild(myIconEl);
+
+
+    var iconIdEl = data.current.weather[0].icon;
+
+    var link = "http://openweathermap.org/img/wn/" + iconIdEl + "@2x.png";
+
+    myIconEl.src = link;
+
+
+    var textDivHeadingEl = document.createElement('div');
+    textDivHeadingEl.className = "text";
+    textDivHeadingEl.innerHTML = "<h2>" + searchTerm + "  (" + moment().format('L') + ") </h2><br>";
+
+    var textDivContentEl = document.createElement('div');
+    textDivContentEl.className = "text";
+    var uvBadgeElement = createBadge(data);
+    textDivContentEl.innerHTML = "<p class='description'>" + data.current.weather[0].description + "</p><br><h5>Temperature: " + data.current.temp + " F<br><br>Humidity: " + data.current.humidity + "%<br><br>Wind Speed: " + data.current.wind_speed + " MPH<br><br>UV Index: </h5>" + uvBadgeElement;
+
+    textDivEl.appendChild(textDivHeadingEl);
+    textDivEl.appendChild(textDivContentEl);
+
+    imageDivEl.appendChild(myIconEl);
+
+    resultTopDivEl.appendChild(textDivEl);
+    resultTopDivEl.appendChild(imageDivEl);
     resultMainEl.appendChild(resultTopDivEl);
 
+    createForecast(data);
+
     console.log(data);
-    /* 10d */
-};
-var getIcon = function(iconNumber) {
-    /*    if (iconNumber === )*/
 
 };
+
+// Forecast
+var createForecast = function(data) {
+    var forecastContainerEl = document.createElement('div');
+    forecastContainerEl.className = "row"
+    forecastContainerEl.setAttribute("style", "padding: 15px; width: 100%");
+    var forecastHeader = document.createElement("h3");
+    forecastHeader.textContent = "5-Day Forecast";
+    resultMainEl.appendChild(forecastHeader);
+
+    for (var i = 0; i < 5; i++) {
+        var momentIndex = i + 1;
+        var forecastIcon = data.daily[i].weather[0].icon;
+
+        var forecastLink = "http://openweathermap.org/img/wn/" + forecastIcon + "@2x.png";
+
+        var newColumn = document.createElement('div');
+        newColumn.className = "col-10 col-sm-10 col-md-2 col-lg-2 col-xl-2";
+
+        newColumn.setAttribute("style", "text-align: center; color: white; padding:0; min-height: 150px; background-color: indigo; margin: auto; max-width: 200px; border: 10px solid white; min-width: 200px;  margin: auto;");
+        var newColumnInterior = document.createElement('div');
+        newColumnInterior.className = "div";
+        newColumnInterior.innerHTML = "<h4 class='date-header'>(" + moment().add(momentIndex, 'd').format('L') + ")</h4><br><br><img src='" + forecastLink + "' alt='weather-icon'><br><br><p class='description'>" + data.daily[i].weather[0].description + "</p>Temp: " + data.daily[i].temp.day + " F<br>Humidity: " + data.daily[i].humidity + "%";
+        newColumn.appendChild(newColumnInterior);
+        forecastContainerEl.appendChild(newColumn);
+    }
+
+    resultMainEl.appendChild(forecastContainerEl);
+
+
+};
+var createBadge = function(data) {
+    var badgeCode = "<h3><span class='badge text-light bg-";
+    var uvValue = data.current.uvi;
+    if (uvValue <= 2) {
+        badgeCode += "success";
+    } else if (uvValue <= 5) {
+        badgeCode += "secondary";
+    } else if (uvValue <= 7) {
+        badgeCode += "warning";
+    } else {
+        badgeCode += "danger";
+    }
+    badgeCode += "'>" + uvValue + "</span></h3>";
+    return badgeCode;
+};
+
+function saveSearch() {
+    localStorage.setItem("weatherArray", JSON.stringify(weatherArray));
+    console.log("search recorded");
+}
+
+function loadSearch() {
+    var savedSearches = JSON.parse(localStorage.getItem("weatherArray"));
+
+    if (savedSearches) {
+        weatherArray = savedSearches;
+        var string = "";
+        var historyDivEl = document.getElementById("history-section");
+        for (var i = 0; i < weatherArray.length; i++) {
+            string += weatherArray[i] + " ";
+            console.log(weatherArray[i]);
+        }
+        historyDivEl.innerHTML = string;
+    } else { return false; }
+    console.log("Search History Found...");
+    weatherArray = JSON.parse(JSON.stringify(savedSearches));
+    console.log(weatherArray);
+
+}
+createHistory();
+loadSearch();
+setInterval(function() {
+    window.location.reload();
+}, 30 * 60000);
+// Saving
+// Loading
+// History

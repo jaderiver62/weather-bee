@@ -1,3 +1,12 @@
 header {
     text-align: center;
 }
+
+.description {
+    font-style: italic;
+    color: rgb(87, 131, 146);
+}
+
+.search-result-container {
+    background-color: white;
+}
