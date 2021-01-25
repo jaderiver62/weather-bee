@@ -4,18 +4,54 @@ var resultMainEl = document.getElementById("search-result-container");
 
 var searchBtn = document.getElementById("btn");
 
+
+var createHistory = function() {
+
+    var historyList = document.createElement("div");
+    var historyDivEl = document.getElementById("history-section");
+    historyDivEl.innerHTML = "";
+    for (var i = 0; i < weatherArray.length; i++) {
+        var entry = weatherArray[i];
+        var historySearchEl = document.createElement("div");
+        historySearchEl.className = "history-el";
+        var historyBtn = document.createElement("button");
+        historyBtn.textContent = entry;
+        historyBtn.className = i + "-btn";
+        historyBtn.setAttribute("value", entry);
+        historyBtn.setAttribute("style", "width: 100%");
+        historySearchEl.appendChild(historyBtn);
+        historyList.appendChild(historySearchEl);
+        historyBtn.addEventListener("click", historyBtnHandler);
+    }
+    historyDivEl.appendChild(historyList);
+
+};
+
+var historyBtnHandler = function(event) {
+    event.preventDefault();
+    var currentSearch = event.target.value;
+    getCoordinates(currentSearch);
+};
+
 var searchHandler = function(event) {
     event.preventDefault();
-    var resultEl = document.getElementById("search-result-container");
+
     var inputContent = document.getElementById("citySelection").value;
     if (inputContent) {
         getCoordinates(inputContent);
-
-
     };
+
+
 };
 searchBtn.addEventListener("click", searchHandler);
-
+var isDuplicate = function(entry) {
+    for (var i = 0; i < weatherArray.length; i++) {
+        if (entry === weatherArray[i]) {
+            return true;
+        }
+    }
+    return false;
+};
 var getCoordinates = function(input) {
     console.log(input);
     var apiUrl = "https://api.opencagedata.com/geocode/v1/json?q=" + input + "&key=974cf3d56a9f45d58e79a7ec8b1f7842";
@@ -55,11 +91,12 @@ var getWeather = function(data, searchTerm) {
 };
 var displayWeather = function(data, searchTerm) {
     resultMainEl.innerHTML = "";
-
-
-    weatherArray.push(searchTerm);
-    saveSearch();
-
+    var checkDuplicate = isDuplicate(searchTerm);
+    if (!checkDuplicate) {
+        weatherArray.push(searchTerm);
+        saveSearch();
+    }
+    createHistory();
     resultMainEl.setAttribute("style", "border: 1px solid black; padding: 10px 10px; display: inline-block;");
 
     var resultTopDivEl = document.createElement("div");
@@ -209,31 +246,21 @@ var createBadge = function(data) {
     return badgeCode;
 };
 
-
-
 function saveSearch() {
     localStorage.setItem("weatherArray", JSON.stringify(weatherArray));
     console.log("search recorded");
-}
+};
 
 function loadSearch() {
     var savedSearches = JSON.parse(localStorage.getItem("weatherArray"));
 
     if (savedSearches) {
         weatherArray = savedSearches;
-        var string = "";
-        var historyDivEl = document.getElementById("history-section");
-        for (var i = 0; i < weatherArray.length; i++) {
-            string += weatherArray[i] + " ";
-            console.log(weatherArray[i]);
-        }
-        historyDivEl.innerHTML = string;
     } else { return false; }
     console.log("Search History Found...");
     weatherArray = JSON.parse(JSON.stringify(savedSearches));
-    console.log(weatherArray);
-
-}
+    createHistory();
+};
 
 loadSearch();
 setInterval(function() {
