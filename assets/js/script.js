@@ -3,12 +3,12 @@ var weatherArray = [];
 var resultMainEl = document.getElementById("search-result-container");
 
 var searchBtn = document.getElementById("btn");
-
+// This function provides the ability to save a search entry in the localStorage and notes it in the console
 function saveSearch() {
     localStorage.setItem("weatherArray", JSON.stringify(weatherArray));
     console.log("search recorded");
 };
-
+// This function uses saved search entries to polulate the history bar - which link the the weather information for that search
 var createHistory = function() {
 
     var historyList = document.createElement("div");
@@ -30,13 +30,14 @@ var createHistory = function() {
     historyDivEl.appendChild(historyList);
 
 };
-
+// A button that calls the getCoordinates() function to get weather data for the saved entries in the history
 var historyBtnHandler = function(event) {
     event.preventDefault();
     var currentSearch = event.target.value;
     getCoordinates(currentSearch);
 };
 
+// A button that reads the search input to get weather data
 var searchHandler = function(event) {
     event.preventDefault();
 
@@ -47,7 +48,11 @@ var searchHandler = function(event) {
 
 
 };
+
+// Listener for the maind search button
 searchBtn.addEventListener("click", searchHandler);
+
+// A function to check if the saved entries already holds a location - this way we don't repeat ourselves and waste space
 var isDuplicate = function(entry) {
     for (var i = 0; i < weatherArray.length; i++) {
         if (entry === weatherArray[i]) {
@@ -56,24 +61,32 @@ var isDuplicate = function(entry) {
     }
     return false;
 };
+
+// This is the main function that accesses an API that gets the longitude and latitude coordinates of a city
 var getCoordinates = function(input) {
     console.log(input);
     var apiUrl = "https://api.opencagedata.com/geocode/v1/json?q=" +
         input + "&key=974cf3d56a9f45d58e79a7ec8b1f7842";
-
+    // Geocode API - Open cage Data
     fetch(apiUrl).then(function(response) {
 
         if (response.ok) {
             response.json().then(function(data) {
                 input = data.results[0].formatted;
                 getWeather(data, input);
+                // Plug the response data into the next function - getWeather()
             });
         } else {
             alert("Error: " + response.statusText);
+            // Check for problems
         }
     });
 };
 
+/*
+This function accesses the Open Weather Map API to use the longitude and latitude coordinates 
+we retrieved from the previous API and finds the data for that location
+*/
 var getWeather = function(data, searchTerm) {
 
     console.log(data);
@@ -88,13 +101,17 @@ var getWeather = function(data, searchTerm) {
         if (response.ok) {
             response.json().then(function(data) {
                 displayWeather(data, searchTerm);
+                // Plug the response data into displayWeather() to make the output accessible to the user
             });
         } else {
             alert("Error: " + response.statusText);
+            // Check for problems
         }
     });
 
 };
+
+// A function that displays the weather data for the requested location
 var displayWeather = function(data, searchTerm) {
     resultMainEl.innerHTML = "";
     var checkDuplicate = isDuplicate(searchTerm);
@@ -129,7 +146,7 @@ var displayWeather = function(data, searchTerm) {
     var iconIdEl = data.current.weather[0].icon;
 
     var link = "http://openweathermap.org/img/wn/" + iconIdEl + "@2x.png";
-
+    // The API conatins these cute icons so I incorporated them
     myIconEl.src = link;
 
 
@@ -141,10 +158,12 @@ var displayWeather = function(data, searchTerm) {
     var textDivContentEl = document.createElement('div');
 
     textDivContentEl.className = "text";
+    // Calls this function createBadge() to generate a badge for the UVI rating
     var uvBadgeElement = createBadge(data);
     textDivContentEl.innerHTML = "<p class='description'>" + data.current.weather[0].description +
         "</p><br><h5>Temperature: " + data.current.temp + " F<br><br>Humidity: " + data.current.humidity +
-        "%<br><br>Wind Speed: " + data.current.wind_speed + " MPH<br><br><br><div class='uv-i d-flex justify-contents-around'>UV Index:   &nbsp &nbsp" + uvBadgeElement + "</h5></div>";
+        "%<br><br>Wind Speed: " + data.current.wind_speed + " MPH<br><br><br><div class='uv-i d-flex justify-contents-around'>UV Index:   &nbsp &nbsp" +
+        uvBadgeElement + "</h5></div>";
 
     textDivEl.appendChild(textDivHeadingEl);
     textDivEl.appendChild(textDivContentEl);
@@ -161,6 +180,9 @@ var displayWeather = function(data, searchTerm) {
 
 };
 
+/* This function takes the value of the UV Index returned for a 
+location and chooses a color based on the risk factor */
+
 var createBadge = function(data) {
     var badgeCode = "<h3><span class='badge text-light bg-";
     var uvValue = data.current.uvi;
@@ -176,10 +198,10 @@ var createBadge = function(data) {
     badgeCode += "'>" + uvValue + "</span></h3>";
     return badgeCode;
 };
+// I used the built in bootstrap badge classes for this
 
 
-
-// Forecast
+// A 5-Day Forecast generating function 
 var createForecast = function(data) {
     var forecastContainerEl = document.createElement('div');
     forecastContainerEl.className = "row"
@@ -213,6 +235,7 @@ var createForecast = function(data) {
 
 };
 
+// This function loads the data saved in the localStorage and intiates the createHistory function
 function loadSearch() {
     var savedSearches = JSON.parse(localStorage.getItem("weatherArray"));
 
@@ -224,10 +247,11 @@ function loadSearch() {
     createHistory();
 };
 
+// Calls loadSearch() to load the saved entries up as the page loads
+
 loadSearch();
+
+// I set this interval for the page to refresh every 30 mins since that is when the weather data is updated
 setInterval(function() {
     window.location.reload();
 }, 30 * 60000);
-// Saving
-// Loading
-// History

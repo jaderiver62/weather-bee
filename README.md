@@ -1,4 +1,4 @@
-# <div align="center">weather-bee</div>
+# <div align="center">Weather-Bee</div>
 ---
 
 
