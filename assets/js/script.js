@@ -219,7 +219,7 @@ var createForecast = function(data) {
         var newColumn = document.createElement('div');
         newColumn.className = "new-column col-10 col-sm-6 col-md-6 col-lg-5 col-xl-2";
 
-        newColumn.setAttribute("style", "text-align: center; padding:10px; color: white; height: 350px; border: 10px solid white; background-color: indigo; min-width: 230px;max-width: 230px;  margin: auto;");
+        newColumn.setAttribute("style", "text-align: center; padding:10px; color: white; height: 350px; border: 10px solid white; background-color:  rgb(75, 116, 231); min-width: 230px;max-width: 230px;  margin: auto;");
         var newColumnInterior = document.createElement('div');
         newColumnInterior.className = "forecast-card p-3";
         newColumnInterior.innerHTML = "<h4 class='date-header'>(" + moment().add(momentIndex, 'd').format('L') +
