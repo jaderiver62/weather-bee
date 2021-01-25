@@ -1,7 +1,7 @@
-// Set a same-site cookie for first-party contexts
+// Cookie settings for cross-site access
 document.cookie = 'cookie1=value1; SameSite=Lax';
-// Set a cross-site cookie for third-party contexts
 document.cookie = 'cookie2=value2; SameSite=None; Secure';
+
 var weatherArray = [];
 
 var resultMainEl = document.getElementById("search-result-container");
