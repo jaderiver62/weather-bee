@@ -4,10 +4,10 @@
 
 ### A very simple weather dashboard app!
 
-![screenshot of scheduler](https://github.com/jaderiver62/weather-bee/blob/main/assets/images/screenshot.png?raw=true)
+![screenshot of dashboard](https://github.com/jaderiver62/weather-bee/blob/main/assets/images/screenshot.png?raw=true)
 
 
-###### :sparkles: https://jaderiver62.github.io/woeather-bee/ :sparkles:
+###### :sparkles: https://jaderiver62.github.io/weather-bee/ :sparkles:
 
 Contact Info:
 :sparkles:[jaderiver64@gmail.com](mailto:jaderiver64@gmail.com):sparkles:
