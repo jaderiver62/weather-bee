@@ -11,5 +11,10 @@ header {
     background-color: white;
 }
 
+.btn {
+    background-color: rgb(75, 116, 231);
+    color: white;
+}
+
 
 /* Not a lot of CSS in the style-sheet*/
