@@ -4,6 +4,10 @@ var resultMainEl = document.getElementById("search-result-container");
 
 var searchBtn = document.getElementById("btn");
 
+function saveSearch() {
+    localStorage.setItem("weatherArray", JSON.stringify(weatherArray));
+    console.log("search recorded");
+};
 
 var createHistory = function() {
 
@@ -16,9 +20,9 @@ var createHistory = function() {
         historySearchEl.className = "history-el";
         var historyBtn = document.createElement("button");
         historyBtn.textContent = entry;
-        historyBtn.className = i + "-btn";
+        historyBtn.className = "history-btn btn-lg";
         historyBtn.setAttribute("value", entry);
-        historyBtn.setAttribute("style", "width: 100%");
+        historyBtn.setAttribute("style", "width: 100%; background-color: white;");
         historySearchEl.appendChild(historyBtn);
         historyList.appendChild(historySearchEl);
         historyBtn.addEventListener("click", historyBtnHandler);
@@ -96,8 +100,9 @@ var displayWeather = function(data, searchTerm) {
     var checkDuplicate = isDuplicate(searchTerm);
     if (!checkDuplicate) {
         weatherArray.push(searchTerm);
-        saveSearch();
+
     }
+    saveSearch();
     createHistory();
     resultMainEl.setAttribute("style", "border: 1px solid black; padding: 10px 10px; display: inline-block;");
 
