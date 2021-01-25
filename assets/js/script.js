@@ -222,8 +222,8 @@ var createForecast = function(data) {
         newColumn.setAttribute("style", "text-align: center; padding:10px; color: white; height: 350px; border: 10px solid white; background-color:  rgb(75, 116, 231); min-width: 230px;max-width: 230px;  margin: auto;");
         var newColumnInterior = document.createElement('div');
         newColumnInterior.className = "forecast-card p-3";
-        newColumnInterior.innerHTML = "<h4 class='date-header'>(" + moment().add(momentIndex, 'd').format('L') +
-            ")</h4><br><br><img src='" + forecastLink + "' alt='weather-icon'><br><br><p class='description'>" +
+        newColumnInterior.innerHTML = "<h4 class='date-header'>" + moment().add(momentIndex, 'd').format('L') +
+            "</h4><br><br><img src='" + forecastLink + "' alt='weather-icon'><br><br><p class='description'>" +
             data.daily[i].weather[0].description + "</p>Temp: " + data.daily[i].temp.day + " F<br>Humidity: " +
             data.daily[i].humidity + "%";
         newColumn.appendChild(newColumnInterior);
