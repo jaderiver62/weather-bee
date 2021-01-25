@@ -16,5 +16,10 @@ header {
     color: white;
 }
 
+.btn:hover,
+.history-btn:hover {
+    opacity: .5;
+}
+
 
 /* Not a lot of CSS in the style-sheet*/
