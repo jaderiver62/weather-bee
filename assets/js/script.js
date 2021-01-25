@@ -54,7 +54,8 @@ var isDuplicate = function(entry) {
 };
 var getCoordinates = function(input) {
     console.log(input);
-    var apiUrl = "https://api.opencagedata.com/geocode/v1/json?q=" + input + "&key=974cf3d56a9f45d58e79a7ec8b1f7842";
+    var apiUrl = "https://api.opencagedata.com/geocode/v1/json?q=" +
+        input + "&key=974cf3d56a9f45d58e79a7ec8b1f7842";
 
     fetch(apiUrl).then(function(response) {
 
@@ -74,7 +75,8 @@ var getWeather = function(data, searchTerm) {
     console.log(data);
     var latEl = data.results[0].geometry.lat;
     var lngEl = data.results[0].geometry.lng;
-    var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + latEl + "&lon=" + lngEl + "&appid=3812ea6836536b0581712ffd66f54fa5&units=imperial";
+    var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" +
+        latEl + "&lon=" + lngEl + "&appid=3812ea6836536b0581712ffd66f54fa5&units=imperial";
 
 
     fetch(apiUrl).then(function(response) {
@@ -135,7 +137,9 @@ var displayWeather = function(data, searchTerm) {
 
     textDivContentEl.className = "text";
     var uvBadgeElement = createBadge(data);
-    textDivContentEl.innerHTML = "<p class='description'>" + data.current.weather[0].description + "</p><br><h5>Temperature: " + data.current.temp + " F<br><br>Humidity: " + data.current.humidity + "%<br><br>Wind Speed: " + data.current.wind_speed + " MPH<br><br><br>UV Index:" + uvBadgeElement + "</h5>";
+    textDivContentEl.innerHTML = "<p class='description'>" + data.current.weather[0].description +
+        "</p><br><h5>Temperature: " + data.current.temp + " F<br><br>Humidity: " + data.current.humidity +
+        "%<br><br>Wind Speed: " + data.current.wind_speed + " MPH<br><br><br><div class='uv-i d-flex justify-contents-around'>UV Index:   &nbsp &nbsp" + uvBadgeElement + "</h5></div>";
 
     textDivEl.appendChild(textDivHeadingEl);
     textDivEl.appendChild(textDivContentEl);
@@ -191,7 +195,10 @@ var createForecast = function(data) {
         newColumn.setAttribute("style", "text-align: center; padding:10px; color: white; height: 350px; border: 10px solid white; background-color: indigo; min-width: 230px;max-width: 230px;  margin: auto;");
         var newColumnInterior = document.createElement('div');
         newColumnInterior.className = "forecast-card p-3";
-        newColumnInterior.innerHTML = "<h4 class='date-header'>(" + moment().add(momentIndex, 'd').format('L') + ")</h4><br><br><img src='" + forecastLink + "' alt='weather-icon'><br><br><p class='description'>" + data.daily[i].weather[0].description + "</p>Temp: " + data.daily[i].temp.day + " F<br>Humidity: " + data.daily[i].humidity + "%";
+        newColumnInterior.innerHTML = "<h4 class='date-header'>(" + moment().add(momentIndex, 'd').format('L') +
+            ")</h4><br><br><img src='" + forecastLink + "' alt='weather-icon'><br><br><p class='description'>" +
+            data.daily[i].weather[0].description + "</p>Temp: " + data.daily[i].temp.day + " F<br>Humidity: " +
+            data.daily[i].humidity + "%";
         newColumn.appendChild(newColumnInterior);
         forecastContainerEl.appendChild(newColumn);
     }
