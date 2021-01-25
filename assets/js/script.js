@@ -152,36 +152,6 @@ var displayWeather = function(data, searchTerm) {
 
 };
 
-// Forecast
-var createForecast = function(data) {
-    var forecastContainerEl = document.createElement('div');
-    forecastContainerEl.className = "row"
-    forecastContainerEl.setAttribute("style", "padding: 15px; width: 100%");
-    var forecastHeader = document.createElement("h3");
-    forecastHeader.textContent = "5-Day Forecast";
-    resultMainEl.appendChild(forecastHeader);
-
-    for (var i = 0; i < 5; i++) {
-        var momentIndex = i + 1;
-        var forecastIcon = data.daily[i].weather[0].icon;
-
-        var forecastLink = "http://openweathermap.org/img/wn/" + forecastIcon + "@2x.png";
-
-        var newColumn = document.createElement('div');
-        newColumn.className = "col-10 col-sm-10 col-md-2 col-lg-2 col-xl-2";
-
-        newColumn.setAttribute("style", "text-align: center; color: white; padding:0; min-height: 150px; background-color: indigo; margin: auto; max-width: 200px; border: 10px solid white; min-width: 200px;  margin: auto;");
-        var newColumnInterior = document.createElement('div');
-        newColumnInterior.className = "div";
-        newColumnInterior.innerHTML = "<h4 class='date-header'>(" + moment().add(momentIndex, 'd').format('L') + ")</h4><br><br><img src='" + forecastLink + "' alt='weather-icon'><br><br><p class='description'>" + data.daily[i].weather[0].description + "</p>Temp: " + data.daily[i].temp.day + " F<br>Humidity: " + data.daily[i].humidity + "%";
-        newColumn.appendChild(newColumnInterior);
-        forecastContainerEl.appendChild(newColumn);
-    }
-
-    resultMainEl.appendChild(forecastContainerEl);
-
-
-};
 var createBadge = function(data) {
     var badgeCode = "<h3><span class='badge text-light bg-";
     var uvValue = data.current.uvi;
@@ -216,11 +186,11 @@ var createForecast = function(data) {
         var forecastLink = "http://openweathermap.org/img/wn/" + forecastIcon + "@2x.png";
 
         var newColumn = document.createElement('div');
-        newColumn.className = "col-10 col-sm-10 col-md-2 col-lg-2 col-xl-2";
+        newColumn.className = "new-column col-10 col-sm-10 col-md-2 col-lg-2 col-xl-2";
 
-        newColumn.setAttribute("style", "text-align: center; color: white; padding:0; min-height: 150px; background-color: indigo; margin: auto; max-width: 200px; border: 10px solid white; min-width: 200px;  margin: auto;");
+        newColumn.setAttribute("style", "text-align: center; padding:10px; color: white; height: 350px; border: 1px solid; box-shadow: 5px 10px #888888;background-color: indigo; width: 200px;  margin: auto;");
         var newColumnInterior = document.createElement('div');
-        newColumnInterior.className = "div";
+        newColumnInterior.className = "forecast-card p-3";
         newColumnInterior.innerHTML = "<h4 class='date-header'>(" + moment().add(momentIndex, 'd').format('L') + ")</h4><br><br><img src='" + forecastLink + "' alt='weather-icon'><br><br><p class='description'>" + data.daily[i].weather[0].description + "</p>Temp: " + data.daily[i].temp.day + " F<br>Humidity: " + data.daily[i].humidity + "%";
         newColumn.appendChild(newColumnInterior);
         forecastContainerEl.appendChild(newColumn);
@@ -229,26 +199,6 @@ var createForecast = function(data) {
     resultMainEl.appendChild(forecastContainerEl);
 
 
-};
-var createBadge = function(data) {
-    var badgeCode = "<h3><span class='badge text-light bg-";
-    var uvValue = data.current.uvi;
-    if (uvValue <= 2) {
-        badgeCode += "success";
-    } else if (uvValue <= 5) {
-        badgeCode += "secondary";
-    } else if (uvValue <= 7) {
-        badgeCode += "warning";
-    } else {
-        badgeCode += "danger";
-    }
-    badgeCode += "'>" + uvValue + "</span></h3>";
-    return badgeCode;
-};
-
-function saveSearch() {
-    localStorage.setItem("weatherArray", JSON.stringify(weatherArray));
-    console.log("search recorded");
 };
 
 function loadSearch() {
