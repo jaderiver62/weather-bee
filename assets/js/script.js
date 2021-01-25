@@ -22,12 +22,13 @@ var createHistory = function() {
         historyBtn.textContent = entry;
         historyBtn.className = "history-btn btn-lg";
         historyBtn.setAttribute("value", entry);
-        historyBtn.setAttribute("style", "width: 100%; background-color: white;");
+        historyBtn.setAttribute("style", "width: 100%; background-color: white; border-radius: 3px; border: 2px solid #E8E8E8;");
         historySearchEl.appendChild(historyBtn);
         historyList.appendChild(historySearchEl);
         historyBtn.addEventListener("click", historyBtnHandler);
     }
     historyDivEl.appendChild(historyList);
+
 
 };
 // A button that calls the getCoordinates() function to get weather data for the saved entries in the history
@@ -121,7 +122,7 @@ var displayWeather = function(data, searchTerm) {
     }
     saveSearch();
     createHistory();
-    resultMainEl.setAttribute("style", "border: 1px solid black; padding: 10px 10px; display: inline-block;");
+    resultMainEl.setAttribute("style", "padding: 10px 10px; display: inline-block;");
 
     var resultTopDivEl = document.createElement("div");
 
@@ -131,7 +132,7 @@ var displayWeather = function(data, searchTerm) {
 
     var textDivEl = document.createElement('div');
     resultTopDivEl.className = "container";
-    resultTopDivEl.setAttribute("style", "padding: 10px; display: flex;");
+    resultTopDivEl.setAttribute("style", "border: 1px solid #E8E8E8; padding: 20px; display: flex;");
     resultTopDivEl.className = "top-result d-flex justify-contents-around";
 
     var textDivEl = document.createElement('div');
@@ -205,9 +206,9 @@ var createBadge = function(data) {
 var createForecast = function(data) {
     var forecastContainerEl = document.createElement('div');
     forecastContainerEl.className = "row"
-    forecastContainerEl.setAttribute("style", "padding: 15px; width: 100%");
+    forecastContainerEl.setAttribute("style", "padding: 15px; width: 100%;");
     var forecastHeader = document.createElement("h3");
-    forecastHeader.textContent = "5-Day Forecast";
+    forecastHeader.innerHTML = "<br>5-Day Forecast";
     resultMainEl.appendChild(forecastHeader);
 
     for (var i = 0; i < 5; i++) {
