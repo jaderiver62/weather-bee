@@ -146,7 +146,7 @@ var displayWeather = function(data, searchTerm) {
 
     var iconIdEl = data.current.weather[0].icon;
 
-    var link = "http://openweathermap.org/img/wn/" + iconIdEl + "@2x.png";
+    var link = "https://openweathermap.org/img/wn/" + iconIdEl + "@2x.png";
     // The API conatins these cute icons so I incorporated them
     myIconEl.src = link;
 
@@ -215,7 +215,7 @@ var createForecast = function(data) {
         var momentIndex = i + 1;
         var forecastIcon = data.daily[i].weather[0].icon;
 
-        var forecastLink = "http://openweathermap.org/img/wn/" + forecastIcon + "@2x.png";
+        var forecastLink = "https://openweathermap.org/img/wn/" + forecastIcon + "@2x.png";
 
         var newColumn = document.createElement('div');
         newColumn.className = "new-column col-10 col-sm-6 col-md-6 col-lg-5 col-xl-2";
